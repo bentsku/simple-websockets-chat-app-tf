@@ -1,10 +1,11 @@
 # simple-websockets-chat-app-tf
 
 Quick sample for https://github.com/localstack/localstack/issues/9002
+Based on https://github.com/aws-samples/simple-websockets-chat-app
 
 ### How to run
 
-Start LocalStack with your prefered way.
+Start LocalStack with your preferred way.
 
 Once LocalStack is started, you can then create the S3 bucket containing the Lambda code.
 
@@ -27,6 +28,12 @@ $ tflocal apply --auto-approve
 Now the infrastructure is deployed, you can test it using `wscat`
 
 ```bash
-$ wscat -c http://localhost:4510
-$ 
+$ wscat -c ws://localhost:4510
+Connected (press CTRL+C to quit)
+> {"message":"hello", "header": "111", "id": "111", "data": "test"}
+< test
+< Data sent.
+> {"action":"sendmessage", "data":"hello world"}
+< hello world
+< Data sent.
 ```
