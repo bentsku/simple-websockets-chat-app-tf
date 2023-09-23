@@ -1,6 +1,7 @@
 # simple-websockets-chat-app-tf
 
 Quick sample for https://github.com/localstack/localstack/issues/9002
+
 Based on https://github.com/aws-samples/simple-websockets-chat-app
 
 ### How to run
