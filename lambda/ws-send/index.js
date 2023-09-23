@@ -3,7 +3,7 @@
 
 const AWS = require('aws-sdk');
 
-const ddb = new AWS.DynamoDB.DocumentClient({ apiVersion: '2012-08-10', region: process.env.AWS_REGION, endpoint: 'http://host.docker.internal:4566' });
+const ddb = new AWS.DynamoDB.DocumentClient({ apiVersion: '2012-08-10', region: process.env.AWS_REGION });
 
 const { TABLE_NAME } = process.env;
 
@@ -16,14 +16,14 @@ exports.handler = async (event) => {
   } catch (e) {
     return { statusCode: 500, body: e.stack };
   }
-  const endpoint = process.env.LOCALSTACK_HOSTNAME ? 'http://host.docker.internal:4566' : event.requestContext.domainName + '/' + event.requestContext.stage
+  // this code is necessary because other the returned endpoint from the requestContext is `localhost`, which is unreachable from the lambda
+  const endpoint = process.env.LOCALSTACK_HOSTNAME ? process.env.LOCALSTACK_HOSTNAME : event.requestContext.domainName + '/' + event.requestContext.stage
+
   const apigwManagementApi = new AWS.ApiGatewayManagementApi({
     apiVersion: '2018-11-29',
     endpoint: endpoint,
   });
-  console.log("body", event.body);
   const postData = JSON.parse(event.body).data || "";
-  console.log("postData", postData);
   
   const postCalls = connectionData.Items.map(async ({ connectionId }) => {
     try {
