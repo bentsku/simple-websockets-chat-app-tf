@@ -7,6 +7,7 @@ Based on https://github.com/aws-samples/simple-websockets-chat-app
 
 Start LocalStack with your preferred way.
 
+
 Once LocalStack is started, you can then create the S3 bucket containing the Lambda code.
 
 ```bash
